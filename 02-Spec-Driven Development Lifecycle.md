@@ -1,73 +1,133 @@
-Here is the complete, end-to-end blueprint for your **Specification-Driven Development (SDD)** workflow. This guide contains both the operational instructions for your team and the optimized, production-ready prompts designed specifically to leverage **Claude Code** and its isolated sub-agent capabilities.
+This is the refined, production-ready blueprint for **Specification-Driven Development (SDD)**. This workflow is optimized for **Claude Code**, utilizing its ability to manage sub-agents, maintain context via `CLAUDE.md`, and execute terminal commands.
 
-🗺️ Phase 0: Discovery & Research
----------------------------------
+---
 
-**The Goal:** Eliminate technical blindsides. Before making any authoritative choices, you must investigate third-party API footprints, performance ceilings, and how the feature matches your current repository state.
+# 🚀 Specification-Driven Development (SDD) Workflow
+**The End-to-End Guide for Claude Code Orchestration**
 
-Plaintext
+This methodology moves engineering from "guessing and coding" to "specifying and verifying." Use these phases sequentially to ensure high-quality, bug-free, and architecturally sound deployments.
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   RESEARCH: Initialize a separate, isolated sub-agent to investigate what is involved in building [insert project/feature idea].   Instruct the sub-agent to explore separately and output a concise markdown report (`research.md`) covering:  1. Industry Standard Approaches: How this domain problem is typically solved in modern engineering.  2. Trade-offs & Architecture Options: The top 2-3 technical approaches with pros/cons.  3. System Alignment: How this must fit into our existing repository architecture, languages, and dependencies (scan the repo structure first).  4. Critical Failure Modes: The hidden edge cases, security vulnerabilities, or infrastructure bottlenecks inherent to this problem space.  The sub-agent must return ONLY the finalized `research.md` to this main context to prevent token bloat. Do not write any feature code or system designs yet.   ``
+---
 
-📜 Phase 1: Global Governance (The Constitution)
-------------------------------------------------
+## 🔍 Phase 0: Discovery & Research
+**Goal:** Eliminate technical blindsides and prevent architectural debt before a single line of code is written.
 
-**The Goal:** Establish the project's engineering laws. By anchoring these rules inside CLAUDE.md, Claude Code natively reads and abides by your testing, formatting, and linting standards automatically in every subsequent step.
+### 📋 Prompt Template
+> **RESEARCH:** Initialize an isolated sub-agent to investigate the technical requirements for **[Insert Project/Feature Idea]**.
+>
+> **Instructions for Sub-agent:**
+> 1. **Industry Standards:** Research how this problem is typically solved in modern engineering.
+> 2. **Architecture Options:** Provide the top 2-3 technical approaches with pros/cons.
+> 3. **System Alignment:** Scan the current repo structure and dependencies to ensure compatibility.
+> 4. **Critical Failure Modes:** Identify edge cases, security risks, or infra bottlenecks.
+>
+> **Output:** Save a concise report to `docs/research/research.md`. Return ONLY the finalized report to the main context to prevent token bloat.
 
-Plaintext
+---
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   CONSTITUTION: Analyze our tech stack, existing repository structure, and codebase dependencies. Based on modern best practices for this ecosystem and the constraints of our environment, initialize an isolated sub-agent to draft or update our root `CLAUDE.md` file.   This file will serve as our project's absolute architectural and behavioral constitution. It must explicitly document:  1. Build & Test Commands: Exact terminal commands to run the build, execute specific test suites, and run linters.  2. Code Style & Standards: Formatting guidelines, naming conventions (e.g., camelCase vs snake_case), and file structure rules.  3. Architectural Patterns: Strict directory layouts, decoupling rules (e.g., services vs controllers), data validation strategies, and error-handling paradigms.  4. Testing Mandates: Requirements for code coverage, mocking external services, and test file naming conventions.  Ensure the sub-agent writes this directly to `CLAUDE.md` and closes itself, returning only a summary of the development laws established.   ``
+## 📜 Phase 1: Global Governance (The Constitution)
+**Goal:** Establish the "Laws of the Repo" in `CLAUDE.md`. This ensures Claude automatically follows your linting, testing, and styling rules.
 
-📐 Phase 2: The Macro Blueprint (System Architecture)
------------------------------------------------------
+### 📋 Prompt Template
+> **CONSTITUTION:** Analyze our tech stack and repository structure. Initialize a sub-agent to draft/update the root `CLAUDE.md` file. 
+>
+> **The file must explicitly document:**
+> 1. **Build & Test Commands:** Precise terminal commands for building, testing, and linting.
+> 2. **Code Style:** Naming conventions (e.g., PascalCase for components), formatting, and file structure rules.
+> 3. **Architecture Patterns:** Directory layouts, decoupling rules (Services vs. Controllers), and error-handling paradigms.
+> 4. **Testing Mandates:** Requirements for coverage, mocking, and naming.
+>
+> **Output:** Direct update to `CLAUDE.md`. Return a summary of the established engineering laws.
 
-**The Goal:** Solidify the structural architecture of the project. This sets a hard boundary on databases, frameworks, infrastructure topology, and core entities before individual feature scopes are mapped.
+---
 
-Plaintext
+## 📐 Phase 2: Macro Blueprint (System Architecture)
+**Goal:** Define the structural boundaries. This acts as the "Fixed Technical Ceiling" for the project.
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   ARCHITECTURE: Review our `research.md` and our `CLAUDE.md` constitution. Draft a comprehensive `architecture_spec.md` file in the root directory.   This must define the project's macro blueprint:  1. Target Tech Stack: Specific versions of languages, databases, frameworks, and runtime environments.  2. Global Entity & Data Models: Core database schema concepts, relationships, and data primitives.  3. Infrastructure & Boundary Maps: Deployment environments, networking boundaries, caching layers, and external third-party API dependencies (e.g., Stripe, AWS S3).  4. Core Security Posture: Authentication mechanics, authorization patterns, data-at-rest/in-transit encryption standards.  This document must act as the fixed technical ceiling for the project. No feature implementation details yet.   ``
+### 📋 Prompt Template
+> **ARCHITECTURE:** Review `docs/research/research.md` and `CLAUDE.md`. Draft a comprehensive `docs/architecture_spec.md`.
+>
+> **Required Sections:**
+> 1. **Tech Stack:** Specific versions of languages, DBs, and frameworks.
+> 2. **Data Models:** Core schema concepts, relationships, and primitives.
+> 3. **Infrastructure Map:** Deployment environments, caching layers, and 3rd-party API dependencies.
+> 4. **Security Posture:** Auth mechanics and data encryption standards.
+>
+> **Rule:** No feature implementation details yet; focus strictly on the system boundaries.
 
-🗂️ Phase 3: Modular Decomposition (Feature Extraction)
--------------------------------------------------------
+---
 
-**The Goal:** Break down the global project scope into an ordered, highly granular backlog. You extract all features here to grasp the macro roadmap, mapping out what dependencies dictate the build sequence.
+## 🗂️ Phase 3: Modular Decomposition (The Backlog)
+**Goal:** Break the global scope into a granular, dependency-aware roadmap.
 
-Plaintext
+### 📋 Prompt Template
+> **EXTRACT:** Read `docs/architecture_spec.md`. Break down the project into a list of atomic, modular features.
+>
+> **Output:** Generate `FEATURES_BACKLOG.md` organized by logical dependencies (e.g., Infra -> Auth -> Core API). 
+> 
+> **For each feature (ID: FEAT-XXX):**
+> - 2-sentence scope description.
+> - **Upstream Dependencies:** What must be finished first?
+> - **Functional Goals:** A high-level checklist.
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   EXTRACT: Read the `architecture_spec.md` and any existing project requirements. Break down the entire project scope into an exhaustive, highly modular list of atomic features.   Generate a `FEATURES_BACKLOG.md` file that organizes these features into a sequential roadmap based strictly on logical dependencies (e.g., Database Setup -> Auth -> Core API -> Third-Party Integrations).   Each extracted feature must be assigned a unique ID (e.g., `FEAT-001`) and include:  - A brief 2-sentence scope description.  - Strict upstream dependencies (what must be built *before* this feature can start).  - A checklist representing its raw functional goals.   ``
+---
 
-📝 Phase 4A: Feature Draft (The Micro Spec)
--------------------------------------------
+## 📝 Phase 4A: Feature Draft (The Micro-Spec)
+**Goal:** Create a behavioral source-of-truth for a single unit of work.
 
-**The Goal:** Create a targeted behavioral specification for a single, isolated unit of work, pulled from your backlog right before development. This focuses exclusively on expectations and interface schemas.
+### 📋 Prompt Template
+> **SPECIFY:** We are starting **[FEAT-XXX]**. Read its entry in `FEATURES_BACKLOG.md`. Spin up a sub-agent to draft `docs/specs/FEAT-XXX.md`.
+>
+> **Must Include:**
+> 1. **Functional Requirements:** API/Data schemas and route definitions.
+> 2. **User Scenarios:** Concrete paths through the feature.
+> 3. **Boundary Rules:** How to handle invalid inputs, timeouts, or empty states.
+> 4. **Acceptance Criteria:** Quantitative criteria that can be programmatically verified.
+>
+> **Output:** Create the spec file. Do not generate any feature code.
 
-Plaintext
+---
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   SPECIFY: We are preparing to build [FEAT-XXX: Feature Name]. Read its entry in `FEATURES_BACKLOG.md`, our `architecture_spec.md`, and the `CLAUDE.md` constitution. Spin up an isolated sub-agent to draft a highly focused technical specification file at `docs/specs/FEAT-XXX.md`.   The spec must explicitly document:  1. Feature Goal: The core business value and technical purpose.  2. User Scenarios / User Stories: Concrete paths through the feature.  3. Functional Requirements & API/Data Schemas: Exact route definitions, request/response JSON payloads, and local database mutations.  4. Explicit Boundary Rules & Edge Cases: Explicitly what happens when inputs are invalid, values are empty, or external services time out.  5. Out of Scope: What this feature explicitly will *not* do.  6. Acceptance Criteria: Highly quantitative criteria. Make each requirement so specific that a build ignoring it would visibly and programmatically fail an automated test.  The sub-agent must write this file and return to the main context without generating code.   ``
+## 🤨 Phase 4B: Spec Hardening (The AI Interview)
+**Goal:** Use Claude’s "Cynical Architect" persona to find logical gaps before they become bugs.
 
-🤨 Phase 4B: AI Spec Hardening (The Interview)
-----------------------------------------------
+### 📋 Prompt Template
+> **CLARIFY:** Read `docs/specs/FEAT-XXX.md`. Act as an elite, hyper-critical Principal Software Architect. Your goal is to find logical gaps and ambiguities.
+>
+> **The Process:**
+> 1. Interview me in the terminal, asking **exactly one** targeted question at a time.
+> 2. Focus on missing state transitions, validation boundaries, and failure modes.
+> 3. After my response, update `docs/specs/FEAT-XXX.md` to reflect the answer.
+> 4. Continue until you are 100% confident a junior dev could implement this without follow-up.
+>
+> **Exit Criteria:** Say "SPEC IS HARDENED" when complete.
 
-**The Goal:** Actively eliminate ambiguity. Rather than letting hidden logical gaps turn into bugs during coding, Claude Code interrogates the specification to push it to a deterministic, production-ready state.
+---
 
-Plaintext
+## 🧪 Phase 4C: Executable Truth (TDD Generation)
+**Goal:** Turn the spec into failing automated tests. This "locks in" the requirements.
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   CLARIFY: Read `docs/specs/FEAT-XXX.md`. Act as an elite, deeply cynical, and hyper-critical Principal Software Architect. Your sole goal is to find logical gaps, unhandled technical edge cases, security oversights, and ambiguities in this feature spec before a developer codes it.   Interview me right here in the terminal, asking exactly one targeted question at a time. Do not write code or summarize your thoughts. Ask your hardest questions about missing state transitions, validation boundaries, or failure modes.   After I respond to a question, modify the `docs/specs/FEAT-XXX.md` file dynamically to reflect the clarified requirement, then ask your next question. Continue this loop until you are 100% confident a junior developer could implement this perfectly without asking a single follow-up question. Say "SPEC IS HARDENED" only when there is absolutely nothing left to misread.   ``
+### 📋 Prompt Template
+> **TEST_GENERATE:** Now that `docs/specs/FEAT-XXX.md` is hardened, initialize a sub-agent to:
+> 1. Read `CLAUDE.md` for testing frameworks and file conventions.
+> 2. Translate every **Acceptance Criterion** and **Edge Case** from the spec into automated test blocks.
+> 3. Write these tests to the codebase.
+> 4. Run the tests (using the command in `CLAUDE.md`) and confirm a **100% failure rate**.
+>
+> **Output:** Terminal logs showing the failing suite. Do not write production logic yet.
 
-🧪 Phase 4C: Executable Truth (Test Generation)
------------------------------------------------
+---
 
-**The Goal:** Solidify requirements into programmatically verifiable code. By converting acceptance criteria into failing automated tests before writing production files, you lock down the feature boundaries perfectly.
+## 🏗️ Phase 5: Sequential Execution (The Build)
+**Goal:** Implement code incrementally until all tests pass and the spec is satisfied.
 
-Plaintext
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   TEST_GENERATE: Now that `docs/specs/FEAT-XXX.md` is verified and hardened, spin up an isolated sub-agent to write the comprehensive unit and integration test suites for this feature.   The sub-agent must:  1. Read the `CLAUDE.md` file to verify the exact testing frameworks, file structure conventions, and directory placements required for this repository.  2. Translate every single Acceptance Criterion and Edge Case defined in `FEAT-XXX.md` into an explicit automated test block.  3. Write these test files into their correct locations in the codebase.  4. Execute the test runner using the exact command defined under the testing section of `CLAUDE.md` to confirm that every newly created test fails gracefully (since no code has been written yet).   The sub-agent must output the terminal logs showing a 100% failure rate across the new tests, then close out. Do not write production code yet.   ``
-
-🏗️ Phase 5: Sequential Execution (The Build)
----------------------------------------------
-
-**The Goal:** Write deterministic production logic. Claude Code steps through the failing tests incrementally, checking its progress against the spec and CLAUDE.md rules until the suite is completely green.
-
-Plaintext
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   BUILD: We are ready to implement [FEAT-XXX: Feature Name]. Look at the failing test suite generated in Phase 4C and the source-of-truth document `docs/specs/FEAT-XXX.md`.   Propose a small, iterative, step-by-step implementation plan to make these tests pass. Review the plan with me first.   Once approved, execute the plan in small increments:  1. Write the minimum production code necessary to satisfy a subset of the tests.  2. Run the test runner locally using the exact command defined in `CLAUDE.md` to watch those specific tests turn green.  3. Ensure all code styling, architectural rules, and linting standards specified in `CLAUDE.md` are strictly enforced at every step.  4. Once all tests for this feature pass flawlessly and no regressions are introduced, automatically execute a localized Git commit labeled with conventional commit syntax matching the feature ID.   ``
+### 📋 Prompt Template
+> **BUILD:** Implement **[FEAT-XXX]**. Reference the failing tests and `docs/specs/FEAT-XXX.md`.
+>
+> **Instructions:**
+> 1. Propose a step-by-step plan to make the tests pass.
+> 2. Once approved, write minimum production code to satisfy one subset of tests at a time.
+> 3. Run the test suite after every change to ensure progress and no regressions.
+> 4. Adhere strictly to the linting/styling in `CLAUDE.md`.
+>
+> **Completion:** Once all tests pass, perform a Git commit with conventional commit syntax matching the Feature ID.

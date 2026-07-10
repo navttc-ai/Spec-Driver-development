@@ -86,10 +86,13 @@ For each feature (ID: FEAT-XXX):
 SPECIFY: We are starting [FEAT-XXX]. Read its entry in `FEATURES_BACKLOG.md`. Spin up a sub-agent to draft `docs/specs/FEAT-XXX.md`.
 
 Must Include:
-1. Functional Requirements: API/Data schemas and route definitions.
-2. User Scenarios: Concrete paths through the feature.
-3. Boundary Rules: How to handle invalid inputs, timeouts, or empty states.
-4. Acceptance Criteria: Quantitative criteria that can be programmatically verified.
+1. Goal
+2. Functional Requirements: API/Data schemas and route definitions.
+3. edge cases & rules
+4. User Scenarios: Concrete paths through the feature.
+5. Boundary Rules: How to handle invalid inputs, timeouts, or empty states.
+6. Acceptance Criteria: Quantitative criteria that can be programmatically verified.
+7. out-of-scope
 
 Output: Create the spec file. Do not generate any feature code.
 ```

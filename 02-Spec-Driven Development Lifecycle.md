@@ -115,7 +115,7 @@ The Process:
 Exit Criteria: Say "SPEC IS HARDENED" when complete.
 ```
 ---
-## 🧪 Phase 4C: Executable Truth (TDD Generation)
+## 🧪 Phase 4C: The VERIFY phase
 **Goal:** The VERIFY phase exists because an agent reporting "done" is not the same as the work being correct — a summary saying "all consistent ✅" can hide a real bug, and agents tend to explain failures away as "test artifacts" rather than surface them. VERIFY forces the claim to be proven by executing real checks against the actual artifacts (schema, data, files), catching foundation-level bugs before later phases build on top of them, where they become far more expensive to trace. Run it after any SYNC, CLARIFY, or schema/contract change, and before generating tests against that foundation.
 
 ### 📋 Copyable Prompt

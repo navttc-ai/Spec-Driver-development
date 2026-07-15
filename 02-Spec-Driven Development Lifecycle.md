@@ -114,10 +114,46 @@ The Process:
 
 Exit Criteria: Say "SPEC IS HARDENED" when complete.
 ```
+---
+## 🧪 Phase 4C: Executable Truth (TDD Generation)
+**Goal:** The VERIFY phase exists because an agent reporting "done" is not the same as the work being correct — a summary saying "all consistent ✅" can hide a real bug, and agents tend to explain failures away as "test artifacts" rather than surface them. VERIFY forces the claim to be proven by executing real checks against the actual artifacts (schema, data, files), catching foundation-level bugs before later phases build on top of them, where they become far more expensive to trace. Run it after any SYNC, CLARIFY, or schema/contract change, and before generating tests against that foundation.
 
+### 📋 Copyable Prompt
+```markdown
+VERIFY: Before proceeding, PROVE that [WHAT WAS JUST CHANGED — e.g. the
+hardened P0 schema / the synced data models / the updated API contract] is
+correctly and consistently applied. Do NOT trust prior summaries or "done"
+claims. Do NOT write production code — write ONE throwaway verification
+script, run it, report results, then delete it.
+
+Source of truth: [FILE — e.g. docs/specs/P0_data_foundation.md]. If other
+files should match it ([e.g. SPEC.md, seed_data.sql]), confirm they agree.
+
+The script must, using the REAL artifacts (not mocks), assert and print
+PASS/FAIL for every item below:
+1. [Structural checks — e.g. schema shape, required fields, constraints exist]
+2. [Behavioral checks — e.g. constraints actually REJECT bad input; test each
+   by attempting an operation that SHOULD fail and confirming it does]
+3. [Data/invariant checks — e.g. seed loads in a single connection; counts and
+   totals match the expected invariant, DERIVED not hard-coded]
+4. [Integration checks — e.g. dependent files/values stay consistent]
+
+Rules:
+- If any step raises an error, print the EXACT failing statement/line and
+  cause. Do NOT catch-and-explain it away as a "test artifact" or
+  "environment issue" — surface it so I can decide.
+- Prove behavior by execution, not by reading definitions (a constraint can be
+  present but wrong; an import can exist but fail).
+- Report a PASS/FAIL table. For any FAIL, quote the offending line and say
+  what's wrong. Do NOT auto-fix — report only, so I decide the fix.
+- Delete the throwaway script when done.
+
+Output: a PASS/FAIL report only. No production code, no file edits beyond the
+temporary script.
+```
 ---
 
-## 🧪 Phase 4C: Executable Truth (TDD Generation)
+## 🧪 Phase 4D: Executable Truth (TDD Generation)
 **Goal:** Lock in requirements by generating failing automated tests.
 
 ### 📋 Copyable Prompt
